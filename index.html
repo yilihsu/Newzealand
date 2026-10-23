@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>紐西蘭南島自駕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFCF6; --ink:#3E3A39;
+  --coral:#F2A497; --yellow:#F6D27A; --mizu:#A8D3E6; --green:#B9DAA5;
+  --line:3px solid var(--ink); --r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--paper);color:var(--ink);font-family:"Huninn",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+
+/* ── 頂端選單 ── */
+header{position:fixed;top:0;left:0;right:0;z-index:20;background:var(--paper);border-bottom:var(--line)}
+header .wrap{display:flex;align-items:center;gap:10px;height:60px}
+.logo{display:flex;align-items:center;gap:6px;font-size:17px;white-space:nowrap}
+.logo svg{width:28px;height:28px}
+nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+nav::-webkit-scrollbar{display:none}
+nav a{text-decoration:none;font-size:14px;padding:4px 11px;border:2px solid var(--ink);border-radius:999px;background:#fff;white-space:nowrap}
+nav a:active{background:var(--yellow)}
+
+main{padding-top:76px;padding-bottom:40px}
+section{margin-bottom:34px}
+h2{font-size:22px;font-weight:normal;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+h2 .dot{width:14px;height:14px;border-radius:50%;border:var(--line);flex:none}
+.card{background:#fff;border:var(--line);border-radius:var(--r);padding:16px}
+.stack{display:grid;gap:12px}
+.muted{font-size:13px;opacity:.75}
+
+/* ── 首頁 ── */
+.hero{text-align:center}
+.hero-art{border:var(--line);border-radius:28px;overflow:hidden;background:var(--paper)}
+.hero-art svg{display:block;width:100%;height:auto}
+.hero h1{font-size:28px;font-weight:normal;margin-top:16px;letter-spacing:.05em}
+.hero .sub{font-size:15px;opacity:.8}
+.count{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.count div{background:var(--yellow);border:var(--line);border-radius:16px;width:68px;padding:6px 0}
+.count b{display:block;font-size:24px;font-weight:normal;line-height:1.2}
+.count span{font-size:12px}
+.count-label{font-size:14px;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.stats div{border:var(--line);border-radius:16px;padding:6px 0;background:#fff}
+.stats b{display:block;font-size:20px;font-weight:normal;line-height:1.3}
+.stats span{font-size:12px}
+
+/* ── 航班 ── */
+.flight{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.flight .tag{grid-column:1/-1;justify-self:start}
+.plane{width:52px;height:52px;border:var(--line);border-radius:16px;display:grid;place-items:center}
+.plane svg{width:34px;height:34px}
+.route{display:flex;align-items:center;gap:8px;font-size:19px}
+.route i{flex:1;border-top:3px dashed var(--ink);height:0;opacity:.5}
+.flight small{display:block;font-size:13px;opacity:.75}
+
+/* 標籤 */
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:12.5px;padding:1px 9px;border:2px solid var(--ink);border-radius:999px;background:#fff;line-height:1.6;white-space:nowrap}
+.t-drive{background:var(--yellow)} .t-hike{background:var(--green)}
+.t-spot{background:var(--mizu)} .t-shop{background:var(--coral)}
+.t-stop{background:#fff;border-style:dashed} .t-boat{background:var(--mizu)}
+.t-note{background:var(--paper)}
+.lv-0{background:#fff} .lv-1{background:var(--green)} .lv-2{background:var(--yellow)} .lv-3{background:var(--coral)}
+.must{background:var(--coral);font-size:12px;padding:0 8px;border:2px solid var(--ink);border-radius:8px;transform:rotate(-4deg);display:inline-block;margin-left:4px;vertical-align:2px;white-space:nowrap}
+
+/* ── 每日行程 ── */
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;margin:0 -16px 10px;padding-left:16px;padding-right:16px;scrollbar-width:none;scroll-snap-type:x proximity}
+.days::-webkit-scrollbar{display:none}
+.days button{flex:none;width:62px;scroll-snap-align:center;font:inherit;color:var(--ink);background:#fff;border:var(--line);border-radius:18px;padding:5px 0 3px;cursor:pointer;line-height:1.25;transition:transform .2s}
+.days button b{display:block;font-size:17px;font-weight:normal}
+.days button small{font-size:11.5px}
+.days button[aria-selected="true"]{background:var(--yellow);transform:translateY(-3px);box-shadow:0 4px 0 var(--ink)}
+.day-head{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.day-head svg{width:64px;height:64px;flex:none}
+.day-head h3{font-size:18px;font-weight:normal;line-height:1.4}
+.day-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.timeline{list-style:none;position:relative;padding-left:26px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;border-left:3px dashed var(--ink);opacity:.35}
+.timeline li{position:relative;margin-bottom:12px}
+.timeline li::before{content:"";position:absolute;left:-26px;top:14px;width:17px;height:17px;border-radius:50%;border:var(--line);background:var(--c,var(--mizu))}
+.timeline .card{padding:11px 14px}
+.timeline h4{font-size:16.5px;font-weight:normal;line-height:1.45;margin:4px 0 2px}
+.timeline p{font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.chips span{font-size:13px;background:var(--paper);border:2px dashed var(--ink);border-radius:10px;padding:0 8px}
+.links{display:grid;gap:6px;margin-top:8px}
+.links a{font-size:13.5px;text-decoration:none;border:2px solid var(--ink);border-radius:12px;padding:4px 10px;background:var(--paper)}
+.links a::after{content:" ↗"}
+.timeline.pop li{animation:pop .55s cubic-bezier(.34,1.56,.64,1) both}
+.timeline.pop li:nth-child(2){animation-delay:.05s}
+.timeline.pop li:nth-child(3){animation-delay:.1s}
+.timeline.pop li:nth-child(4){animation-delay:.15s}
+.timeline.pop li:nth-child(5){animation-delay:.2s}
+.timeline.pop li:nth-child(6){animation-delay:.25s}
+.timeline.pop li:nth-child(n+7){animation-delay:.3s}
+.day-head.pop svg{animation:boing .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{0%{opacity:0;transform:translateY(18px) scale(.94)}100%{opacity:1;transform:none}}
+@keyframes boing{0%{transform:scale(.6) rotate(-8deg)}100%{transform:none}}
+
+/* 照片 */
+.photo{margin-top:10px}
+.photo img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border:var(--line);border-radius:16px;background:var(--paper)}
+.photo figcaption{font-size:11.5px;opacity:.7;margin-top:3px;text-align:right}
+.photo figcaption a{text-decoration:underline dotted}
+.gallery{display:flex;gap:10px;overflow-x:auto;margin:16px -16px 0;padding:4px 16px 8px;scrollbar-width:none;scroll-snap-type:x mandatory;text-align:left}
+.gallery::-webkit-scrollbar{display:none}
+.gallery button{flex:none;width:68%;max-width:260px;scroll-snap-align:center;font:inherit;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border:var(--line);border-radius:18px;background:var(--paper)}
+.gallery span{display:block;font-size:13.5px;margin-top:4px}
+.gallery small{font-size:12px;opacity:.7}
+
+/* ── 採買 ── */
+.stage h3{font-size:16px;font-weight:normal;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.stage h3 i{font-style:normal;font-size:12px;border:2px solid var(--ink);border-radius:8px;padding:0 7px;background:var(--yellow)}
+.shop-row{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:10px 0;border-top:2px dashed rgba(62,58,57,.3)}
+.shop-row:first-of-type{border-top:0;padding-top:0}
+.shop-row .d{width:44px;height:44px;border:var(--line);border-radius:14px;display:grid;place-items:center;font-size:14px;background:var(--paper)}
+.shop-row b{font-weight:normal;font-size:15px}
+.shop-row p{font-size:13.5px}
+
+/* ── 入境 ── */
+.info-grid{display:grid;gap:12px}
+.info h3{font-size:17px;font-weight:normal;margin-bottom:4px}
+.info p,.info li{font-size:14px}
+.info ul{padding-left:18px;margin-top:4px}
+.ban{background:var(--coral)} .ok{background:var(--green)}
+.en-list{font-size:13px;background:var(--paper);border:2px dashed var(--ink);border-radius:12px;padding:6px 10px;margin-top:8px;line-height:1.7}
+
+/* ── 待辦清單 ── */
+.list-group{margin-bottom:14px}
+.list-group h3{font-size:16px;font-weight:normal;margin-bottom:8px;display:flex;justify-content:space-between}
+.list-group h3 span{font-size:13px;opacity:.7}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.check{position:relative}
+.check input{position:absolute;opacity:0;inset:0}
+.check label{display:inline-flex;align-items:center;gap:6px;font-size:14px;padding:5px 12px 5px 8px;border:2px solid var(--ink);border-radius:999px;background:#fff;cursor:pointer;user-select:none;transition:background .2s}
+.check label::before{content:"";width:16px;height:16px;border:2px solid var(--ink);border-radius:6px;background:#fff;flex:none}
+.check input:checked+label{background:var(--green)}
+.check input:checked+label::before{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23FFFCF6' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.check input:focus-visible+label{outline:3px solid var(--mizu);outline-offset:2px}
+.bar{height:14px;border:var(--line);border-radius:999px;background:#fff;overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;background:var(--yellow);border-right:3px solid var(--ink);width:0;transition:width .4s}
+
+/* ── 住宿 ── */
+.stay-list{list-style:none;display:grid;gap:10px}
+.stay-item{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.nights{width:56px;border:var(--line);border-radius:14px;text-align:center;padding:4px 0;line-height:1.25;background:var(--mizu)}
+.nights b{display:block;font-weight:normal;font-size:15px}
+.nights small{font-size:11.5px}
+.stay-item h3{font-size:16.5px;font-weight:normal;line-height:1.4}
+.stay-item p{font-size:13.5px}
+.stay-item .chips{margin-top:4px}
+.btn{display:inline-block;text-decoration:none;font-size:13.5px;padding:3px 14px;margin-top:6px;border:2px solid var(--ink);border-radius:999px;background:var(--yellow);box-shadow:0 3px 0 var(--ink)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+footer{text-align:center;font-size:13px;opacity:.6;padding:10px 0 30px}
+
+/* ── 插圖動畫 ── */
+.float{animation:float 4s ease-in-out infinite}
+.drift{animation:drift 26s linear infinite}
+.drift2{animation:drift 34s linear infinite -14s}
+.van{animation:van 14s linear infinite}
+.wave{animation:wave 5s linear infinite}
+.bob{animation:bob 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center}
+.sway{animation:sway 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center}
+.sway2{animation:sway 3.8s ease-in-out infinite -1.2s;transform-box:fill-box;transform-origin:bottom center}
+.spin{animation:spin 30s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes float{50%{transform:translateY(-4px)}}
+@keyframes drift{0%{transform:translateX(-90px)}100%{transform:translateX(420px)}}
+@keyframes van{0%{transform:translateX(-90px)}100%{transform:translateX(380px)}}
+@keyframes wave{0%{transform:translateX(0)}100%{transform:translateX(-40px)}}
+@keyframes bob{50%{transform:translateY(-2px) rotate(-3deg)}}
+@keyframes sway{50%{transform:rotate(5deg)}}
+@keyframes spin{100%{transform:rotate(360deg)}}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+@media (min-width:520px){.hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29V9M16 13q-6-1-9-6M16 17q-7 0-11-4M16 21q-6 1-10-2M16 13q6-1 9-6M16 17q7 0 11-4M16 21q6 1 10-2" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="6" r="3" fill="#B9DAA5" stroke="#3E3A39" stroke-width="2"/></svg>
+      紐西蘭
+    </div>
+    <nav aria-label="主選單">
+      <a href="#home">首頁</a>
+      <a href="#flight">航班</a>
+      <a href="#plan">行程</a>
+      <a href="#shop">採買</a>
+      <a href="#entry">入境</a>
+      <a href="#todo">清單</a>
+      <a href="#stay">住宿</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 首頁 -->
+<section id="home" class="hero">
+  <div class="hero-art">
+    <svg viewBox="0 0 360 230" role="img" aria-label="南阿爾卑斯雪山、蒂卡波湖畔教堂、羽扇豆、綿羊與自駕露營車的插圖">
+      <g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <!-- 太陽 -->
+        <g class="float"><circle cx="312" cy="36" r="15" fill="#F6D27A"/>
+          <g class="spin" stroke-width="2.5"><path d="M312 13v-5M312 64v-5M289 36h-5M340 36h-5M296 20l-4-4M332 56l-4-4M296 52l-4 4M332 16l-4 4"/></g></g>
+        <!-- 雲 -->
+        <path class="drift" d="M20 40a10 10 0 0 1 18-6a12 12 0 0 1 22 4a8 8 0 0 1 0 16H22a9 9 0 0 1-2-14z" fill="#fff" stroke-width="2.5"/>
+        <path class="drift2" d="M40 78a8 8 0 0 1 14-5a10 10 0 0 1 18 3a7 7 0 0 1 0 13H42a8 8 0 0 1-2-11z" fill="#fff" stroke-width="2.5"/>
+        <!-- 南阿爾卑斯雪山 -->
+        <path d="M-5 128L48 78L78 100L132 42L178 96L214 66L258 106L298 74L365 124V140H-5Z" fill="#FFFCF6"/>
+        <path d="M112 64l8 8 6-6 8 8 8-6M196 82l6 6 6-5 6 6M40 90l6 4 6-4M284 88l6 5 6-4" fill="none" stroke-width="2.5"/>
+        <!-- 山腳草坡 -->
+        <path d="M-5 138Q60 112 125 130T245 124T365 132V146H-5Z" fill="#B9DAA5"/>
+        <!-- 湖 -->
+        <rect x="-5" y="144" width="370" height="30" fill="#A8D3E6"/>
+        <g class="wave" fill="none" stroke-width="2.5" opacity=".65">
+          <path d="M0 158q10-5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0"/>
+        </g>
+        <!-- 湖畔與教堂 -->
+        <path d="M218 174Q262 140 365 142V174Z" fill="#B9DAA5"/>
+        <g transform="translate(278 120)">
+          <path d="M0 28V12L14 2L28 12V28Z" fill="#FFFCF6"/>
+          <path d="M-3 13L14 0L31 13" fill="none"/>
+          <path d="M10 28v-9a4 4 0 0 1 8 0v9z" fill="#F2A497" stroke-width="2.5"/>
+          <path d="M14 0v-9M10 -5h8" stroke-width="2.5"/>
+        </g>
+        <!-- 金色草原 -->
+        <rect x="-5" y="172" width="370" height="60" fill="#F6D27A"/>
+        <!-- 道路 -->
+        <rect x="-5" y="196" width="370" height="20" fill="#FFFCF6"/>
+        <path d="M0 206H360" stroke-width="2" stroke-dasharray="10 10" fill="none" opacity=".55"/>
+        <!-- 羽扇豆 -->
+        <g class="sway"><path d="M24 196v-24" stroke-width="2.5"/><path d="M24 150q-6 2-6 8q0 14 6 18q6-4 6-18q0-6-6-8z" fill="#F2A497" stroke-width="2.5"/></g>
+        <g class="sway2"><path d="M40 196v-18" stroke-width="2.5"/><path d="M40 160q-5 2-5 7q0 11 5 15q5-4 5-15q0-5-5-7z" fill="#A8D3E6" stroke-width="2.5"/></g>
+        <g class="sway"><path d="M330 196v-20" stroke-width="2.5"/><path d="M330 156q-5 2-5 7q0 12 5 16q5-4 5-16q0-5-5-7z" fill="#F2A497" stroke-width="2.5"/></g>
+        <!-- 綿羊 -->
+        <g class="bob">
+          <path d="M70 186a8 8 0 0 1 10-8a9 9 0 0 1 16 2a7 7 0 0 1 0 12H74a7 7 0 0 1-4-6z" fill="#fff" stroke-width="2.5"/>
+          <ellipse cx="100" cy="184" rx="5" ry="6" fill="#3E3A39" stroke-width="0"/>
+          <path d="M78 192v4M90 192v4" stroke-width="2.5"/>
+        </g>
+        <!-- 自駕露營車 -->
+        <g class="van">
+          <path d="M6 212V194a6 6 0 0 1 6-6h46l14 10v14z" fill="#A8D3E6"/>
+          <path d="M6 205h66" stroke-width="2"/>
+          <g fill="#FFFCF6" stroke-width="2"><rect x="14" y="193" width="12" height="7" rx="2"/><rect x="32" y="193" width="12" height="7" rx="2"/><path d="M52 193h6l9 6h-15z"/></g>
+          <path d="M14 188v-4h30v4" fill="#F2A497" stroke-width="2.5"/>
+          <circle cx="20" cy="213" r="5" fill="#3E3A39"/><circle cx="58" cy="213" r="5" fill="#3E3A39"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <h1>紐西蘭南島・自駕健行</h1>
+  <p class="sub">2027 / 1 / 24（日）出發 ～ 2 / 7（日）返家</p>
+  <div class="count" id="count" aria-live="polite">
+    <div><b id="cd-d">--</b><span>天</span></div>
+    <div><b id="cd-h">--</b><span>時</span></div>
+    <div><b id="cd-m">--</b><span>分</span></div>
+    <div><b id="cd-s">--</b><span>秒</span></div>
+  </div>
+  <p class="count-label" id="count-label">距離出發（1/24）</p>
+  <div class="stats">
+    <div><b>13 晚</b><span>10 間住宿</span></div>
+    <div><b>約 28 hr</b><span>總車程</span></div>
+    <div><b>4 天</b><span>高強度健行</span></div>
+  </div>
+  <div class="gallery" id="gallery" aria-label="景點照片，點選可跳到當天行程"></div>
+  <p class="muted" style="margin-top:4px">← 滑動看景點照片，點一下跳到當天行程</p>
+</section>
+
+<!-- 航班 -->
+<section id="flight">
+  <h2><span class="dot" style="background:var(--mizu)"></span>航班</h2>
+  <div class="stack">
+    <div class="card flight">
+      <span class="tag t-spot">去程・1/24（日）</span>
+      <div class="plane" style="background:var(--mizu)"><svg viewBox="0 0 40 40"><path class="float" d="M5 22l10-2 7-12h4l-3 11 9-1 3-4h3l-2 7 2 7h-3l-3-4-9-1 3 11h-4l-7-12-10-2z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div class="route">台灣 <i></i> 基督城 CHC</div>
+        <small>航班號碼與時間：待填・1/25 抵達後取車</small>
+      </div>
+    </div>
+    <div class="card flight">
+      <span class="tag t-shop">回程・2/7（日）</span>
+      <div class="plane" style="background:var(--coral)"><svg viewBox="0 0 40 40"><path class="float" d="M5 22l10-2 7-12h4l-3 11 9-1 3-4h3l-2 7 2 7h-3l-3-4-9-1 3 11h-4l-7-12-10-2z" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div>
+        <div class="route">基督城 CHC <i></i> 台灣</div>
+        <small>航班號碼與時間：待填・出發前先還車</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 每日行程 -->
+<section id="plan">
+  <h2><span class="dot" style="background:var(--yellow)"></span>每日行程</h2>
+  <div class="days" role="tablist" id="days"></div>
+  <div class="day-head" id="day-head"></div>
+  <div class="day-meta" id="day-meta"></div>
+  <ol class="timeline" id="timeline"></ol>
+  <p style="font-size:13px;display:flex;flex-wrap:wrap;gap:5px;align-items:center">
+    標籤：<span class="tag t-drive">🚗 自駕</span><span class="tag t-hike">🥾 健行</span><span class="tag t-spot">📍 景點</span><span class="tag t-stop">☕ 短休息</span><span class="tag t-boat">⛴ 遊船</span><span class="tag t-shop">🛒 採買</span>
+  </p>
+</section>
+
+<!-- 採買 -->
+<section id="shop">
+  <h2><span class="dot" style="background:var(--coral)"></span>超市採買</h2>
+  <p class="muted" style="margin-bottom:12px">以 PAK'nSAVE、Woolworths、FreshChoice 為主，較便宜。Woolworths 與 FreshChoice 記得註冊 EveryDay Rewards 會員卡。</p>
+  <div class="stack" id="shop-list"></div>
+</section>
+
+<!-- 入境與檢疫 -->
+<section id="entry">
+  <h2><span class="dot" style="background:var(--green)"></span>入境與檢疫</h2>
+  <div class="info-grid">
+    <div class="card info">
+      <h3>🛂 NZeTA 電子旅行授權</h3>
+      <p>持台灣護照入境必須事先申請。建議下載官方 App 辦理，費用已含國際旅客保育及旅遊捐（IVL）。</p>
+    </div>
+    <div class="card info">
+      <h3>📝 NZTD 旅客聲明</h3>
+      <p>抵達前 <b style="font-weight:normal;background:var(--yellow);padding:0 4px;border-radius:4px">24 小時內</b>線上填寫海關與檢疫申報。不確定要不要申報的東西（健行鞋、包裝食品、藥品），一律勾「Yes（有攜帶）」。</p>
+    </div>
+    <div class="card info">
+      <h3>🥾 裝備清潔</h3>
+      <ul>
+        <li>登山鞋、拖鞋鞋底的泥土、草屑、種子、沙子徹底刷乾淨</li>
+        <li>登山杖（杖尖、擋泥板）、帳篷釘、野營用品、三腳架底部擦乾淨</li>
+        <li>穿過的戶外鞋與裝備放行李箱最上方，方便海關快速取出</li>
+      </ul>
+    </div>
+    <div class="card info ban">
+      <h3>🚫 絕對禁止攜帶</h3>
+      <ul>
+        <li>新鮮水果、蔬菜、肉類（生肉、熟肉、家禽）</li>
+        <li>含肉食品：肉鬆、肉乾、含肉塊泡麵、肉粽、肉餡糕點／月餅</li>
+        <li>蛋類、乳製品、蜂蜜、花粉、燕窩、新鮮種子或植物</li>
+      </ul>
+    </div>
+    <div class="card info ok">
+      <h3>✅ 可以帶，但必須申報</h3>
+      <p>商業包裝的零食與食品：無肉泡麵、餅乾、茶包、乾燥香菇、堅果、個人用藥品等。</p>
+      <div class="en-list">建議帶一份英文食品清單，例如：<br>Instant Noodles (No meat)<br>Dried Mushrooms<br>Green Tea Bags</div>
+    </div>
+  </div>
+</section>
+
+<!-- 待辦清單 -->
+<section id="todo">
+  <h2><span class="dot" style="background:var(--yellow)"></span>待辦清單</h2>
+  <div class="card">
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+    <div id="lists"></div>
+  </div>
+</section>
+
+<!-- 住宿 -->
+<section id="stay">
+  <h2><span class="dot" style="background:var(--mizu)"></span>住宿資訊</h2>
+  <ul class="stay-list" id="stay-list"></ul>
+</section>
+
+</main>
+<footer>Kia ora！一路平安、開車小心 🚗</footer>
+
+<script>
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+/* ── 倒數 ── */
+const target = new Date('2027-01-24T00:00:00+08:00').getTime();
+const end = new Date('2027-02-08T00:00:00+08:00').getTime();
+const pad = n => String(n).padStart(2,'0');
+function tick(){
+  const now = Date.now(), diff = target - now;
+  if (diff <= 0){
+    document.getElementById('count').style.display='none';
+    document.getElementById('count-label').textContent = now < end ? '旅行進行中！開車小心 🐑' : '旅程結束，下次見 🥝';
+    return;
+  }
+  const s = Math.floor(diff/1000);
+  document.getElementById('cd-d').textContent = Math.floor(s/86400);
+  document.getElementById('cd-h').textContent = pad(Math.floor(s%86400/3600));
+  document.getElementById('cd-m').textContent = pad(Math.floor(s%3600/60));
+  document.getElementById('cd-s').textContent = pad(s%60);
+}
+tick(); setInterval(tick,1000);
+
+/* ── 插圖小圖示 ── */
+const S = 'stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+const icon = {
+  city:`<svg viewBox="0 0 64 64"><g ${S}><rect x="6" y="28" width="18" height="30" rx="3" fill="#A8D3E6"/><rect x="24" y="14" width="18" height="44" rx="3" fill="#FFFCF6"/><rect x="42" y="32" width="16" height="26" rx="3" fill="#F2A497"/><path d="M30 24h6M30 34h6M30 44h6M12 38h6M12 46h6" stroke-width="2.5"/></g></svg>`,
+  lake:`<svg viewBox="0 0 64 64"><g ${S}><path d="M2 34L18 18L28 28L40 14L62 34Z" fill="#FFFCF6"/><rect x="2" y="34" width="60" height="24" rx="4" fill="#A8D3E6"/><path d="M38 34V24l8-6 8 6v10" fill="#F2A497"/><path d="M46 18v-6" stroke-width="2.5"/></g></svg>`,
+  mount:`<svg viewBox="0 0 64 64"><g ${S}><path d="M2 58L24 14L36 32L44 22L62 58Z" fill="#FFFCF6"/><path d="M17 28l7 5 5-4" fill="none" stroke-width="2.5"/><path d="M2 58Q20 44 34 50T62 52V58Z" fill="#B9DAA5"/></g></svg>`,
+  hill:`<svg viewBox="0 0 64 64"><g ${S}><circle cx="48" cy="14" r="7" fill="#F6D27A"/><path d="M2 46Q18 22 34 40T62 36V58H2Z" fill="#B9DAA5"/><rect x="2" y="48" width="60" height="10" rx="3" fill="#A8D3E6"/></g></svg>`,
+  fjord:`<svg viewBox="0 0 64 64"><g ${S}><path d="M2 46V20L18 8L26 46Z" fill="#B9DAA5"/><path d="M62 46V16L44 6L36 46Z" fill="#B9DAA5"/><rect x="2" y="44" width="60" height="16" rx="3" fill="#A8D3E6"/><path d="M22 46h20l-4 6H26z" fill="#FFFCF6" stroke-width="2.5"/><path d="M32 46v-6h6" fill="none" stroke-width="2.5"/></g></svg>`,
+  glacier:`<svg viewBox="0 0 64 64"><g ${S}><path d="M2 54L22 10L32 26L42 12L62 54Z" fill="#A8D3E6"/><path d="M22 10L28 54M42 12L36 54" fill="none" stroke-width="2.5"/><path d="M2 54Q22 44 40 50T62 50V60H2Z" fill="#B9DAA5"/></g></svg>`,
+  plane:`<svg viewBox="0 0 64 64"><g ${S}><circle cx="32" cy="32" r="27" fill="#F6D27A"/><path d="M10 35l15-3 10-17h6l-5 16 13-1 4-6h5l-3 10 3 10h-5l-4-6-13-1 5 16h-6l-10-17-15-3z" fill="#FFFCF6" stroke-width="2.5"/></g></svg>`
+};
+
+/* ── 行程資料 ── */
+const LV = {0:['lv-0','輕鬆修整'],1:['lv-1','普通'],2:['lv-2','中強度'],3:['lv-3','高強度']};
+const TAG = {drive:['t-drive','🚗 自駕','var(--yellow)'], hike:['t-hike','🥾 健行','var(--green)'], spot:['t-spot','📍 景點','var(--mizu)'],
+  stop:['t-stop','☕ 短休息','#fff'], boat:['t-boat','⛴ 遊船','var(--mizu)'], shop:['t-shop','🛒 採買','var(--coral)'], note:['t-note','📝 備註','var(--paper)']};
+const cruises = [
+  ['選項 1・Cruise only（只含遊船）','https://www.klook.com/zh-TW/activity/102418-cruise-only-from-milford-sound/'],
+  ['選項 2・Boutique 小船遊船','https://www.klook.com/zh-TW/activity/52556-milford-sound-boutique-small-boat-cruise/'],
+  ['選項 3・Pure Milford 豪華遊船','https://www.klook.com/zh-TW/activity/23225-pure-milford-premium-milford-sound-cruise/']
+];
+const PH = f => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f)}?width=800`;
+const PG = f => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f.replace(/ /g,'_'))}`;
+const days = [
+  {date:'1/25',wd:'一',icon:'city',title:'基督城：取車、採買、修整',drive:null,lv:0,stay:'基督城',kitchen:null,items:[
+    {t:'spot',title:'取車'},
+    {t:'shop',title:'全程最大採買・PAK\'nSAVE',must:true,p:'Riccarton 或 Moorhouse 門市，取車後直接前往。把未來 3–4 天的基底乾糧一次買齊。',
+     chips:['保冷劑／冰塊','夾鏈袋','垃圾袋','面紙／濕紙巾','防蚊／防黑蠅噴霧（DEET）','吐司','雞蛋','果醬／花生醬','Muesli Bars','堅果','大瓶礦泉水','牛奶','優格','起司片','培根','香腸／雞胸肉']},
+    {t:'note',title:'早點休息，修整時差'}]},
+  {date:'1/26',wd:'二',icon:'lake',title:'基督城 ➔ 蒂卡波湖',drive:'3.5hr',lv:1,stay:'蒂卡波湖',kitchen:'共用',items:[
+    {t:'drive',title:'77 號、72 號公路，或 1 號公路'},
+    {t:'shop',title:'途中補給・Woolworths',p:'經 Fairlie 或 Geraldine 時，補充新鮮水果（蘋果、香蕉，方便健行帶）。'},
+    {t:'spot',title:'Mount John 咖啡廳',must:true},
+    {t:'spot',title:'好牧羊人教堂・湖畔',must:true,img:'Church of the Good Shepherd, Lake Tekapo, New Zealand 01.jpg'}]},
+  {date:'1/27',wd:'三',icon:'mount',title:'蒂卡波湖 ➔ 普卡基湖 ➔ 庫克山',drive:'1.5hr',lv:1,lvText:'普通（平緩健行）',stay:'庫克山村',kitchen:'共用',items:[
+    {t:'drive',title:'8 號、80 號公路'},
+    {t:'stop',title:'沿途短休息',chips:['Lake Pukaki Viewpoint','Peter\'s Lookout']},
+    {t:'spot',title:'Mt Cook Alpine Salmon Shop'},
+    {t:'hike',title:'Hooker Valley Track',dur:'3hr',must:true,img:'Hooker Valley Track, Mount Cook, New Zealand.jpg'},
+    {t:'hike',title:'Tasman Lake Track',dur:'1.5hr'},
+    {t:'note',title:'庫克山村沒有超市',p:'只有飯店餐廳。今晚晚餐和明天 Sealy Tarns 的行動糧，全靠 D1–D2 的存糧。'}]},
+  {date:'1/28',wd:'四',icon:'mount',title:'庫克山 ➔ 克羅姆威爾 ➔ 皇后鎮',drive:'3.5hr',lv:3,stay:'皇后鎮',kitchen:'微波爐、熱水壺',items:[
+    {t:'hike',title:'Sealy Tarns Track',dur:'4hr',must:true,img:'Sealy Tarns, Aoraki - Mount Cook National Park, New Zealand 15.jpg'},
+    {t:'drive',title:'8 號公路'},
+    {t:'stop',title:'沿途短休息',chips:['Lindis Pass Viewpoint','Roaring Meg Lookout']},
+    {t:'spot',title:'Cromwell 散步',chips:['Cromwell Heritage Precinct','The Junction Lookout','Bannockburn Sluicings Historic Reserve']},
+    {t:'shop',title:'中途大補給・PAK\'nSAVE Frankton',p:'在進入皇后鎮市區前的 Frankton 購物區。供 D4–D5 皇后鎮與 D6 蒂阿瑙烹飪。',
+     chips:['冰塊／冰寶換冰','牛排','羊排','鮭魚','蔬菜','洋芋片','氣泡水','啤酒／葡萄酒','果汁']}]},
+  {date:'1/29',wd:'五',icon:'hill',title:'皇后鎮',drive:null,lv:1,lvText:'普通（簡單爬升、散步）',stay:'皇后鎮',kitchen:'微波爐、熱水壺',items:[
+    {t:'hike',title:'Queenstown Hill Walkway',dur:'2hr',img:'Queenstown Hill.jpg'},
+    {t:'hike',title:'Moke Lake',dur:'2.5hr',must:true},
+    {t:'spot',title:'Glenorchy（漂亮小鎮）'},
+    {t:'shop',title:'FreshChoice Queenstown',p:'市中心 Shotover St，徒步可到。現烤熟食、三明治、牛奶、宵夜。'}]},
+  {date:'1/30',wd:'六',icon:'hill',title:'皇后鎮 ➔ 蒂阿瑙',drive:'2.5hr',lv:1,lvText:'普通（散步）',stay:'蒂阿瑙',kitchen:'共用',items:[
+    {t:'spot',title:'皇后鎮市區散步 或 Lake Alta'},
+    {t:'drive',title:'6 號、94 號公路'},
+    {t:'stop',title:'沿途短休息',chips:['Devil\'s Staircase Lookout Point','Kingston','Mossburn','Wilderness Scientific Reserve']},
+    {t:'shop',title:'峽灣前補給・FreshChoice Te Anau',must:true,p:'進米爾福德峽灣前最後一家大型超市。',
+     chips:['D7 午餐：三明治／壽司／派','熟食肉捲','蘋果／香蕉','巧克力','堅果','電解質發泡錠','D7 晚餐肉品與蔬菜']}]},
+  {date:'1/31',wd:'日',icon:'fjord',title:'蒂阿瑙 ➔ 米爾福德峽灣 ➔ 蒂阿瑙',drive:'4hr',lv:3,stay:'蒂阿瑙',kitchen:'共用',items:[
+    {t:'drive',title:'94 號公路去程'},
+    {t:'stop',title:'沿途短休息',chips:['Eglinton Valley']},
+    {t:'boat',title:'Milford Sound 遊船（待訂）',must:true,links:cruises,img:'Milford Sound (New Zealand).JPG'},
+    {t:'hike',title:'Lake Marian Track',dur:'3.5hr',must:true,img:'Marian Creek in Fiordland National Park 02.jpg',cap:'步道起點的 Marian Creek'},
+    {t:'stop',title:'回程順遊',chips:['Falls Creek Falls','Lake Gunn North Viewpoint','Mirror Lakes']}]},
+  {date:'2/1',wd:'一',icon:'hill',title:'蒂阿瑙 ➔ 箭鎮 ➔ 瓦納卡',drive:'3hr',lv:1,lvText:'普通（散步）',stay:'瓦納卡',kitchen:'共用',items:[
+    {t:'drive',title:'94 號、6 號公路至 Arrowtown',chips:['Kingston','Mossburn']},
+    {t:'spot',title:'Arrowtown',chips:['Historic Arrowtown Chinese Settlement','Lakes District Museum & Gallery','Buckingham Street']},
+    {t:'drive',title:'Crown Range Rd 至 Wanaka',chips:['Crown Range Summit','Cardrona Lookout','Cardrona Hotel']},
+    {t:'shop',title:'冰河鎮前大補給・Woolworths／FreshChoice Wanaka',must:true,p:'Fox Glacier 和 Franz Josef 只有很貴的 Four Square，D10 晚餐與早餐要在這裡買齊，用保冷袋帶過去。',
+     chips:['牛排／雞腿','雞蛋','吐司','牛奶','蔬菜']}]},
+  {date:'2/2',wd:'二',icon:'mount',title:'瓦納卡',drive:null,lv:3,stay:'瓦納卡',kitchen:'共用',items:[
+    {t:'hike',title:'Roys Peak Track 或 Isthmus Peak',dur:'6hr',must:true,img:'Roys Peak.jpg',cap:'Roys Peak'},
+    {t:'spot',title:'Wanaka 市區、湖畔散步'},
+    {t:'shop',title:'爬完補充熱量',p:'鎮上超市買現烤烤雞或熟食，快速補充蛋白質。'}]},
+  {date:'2/3',wd:'三',star:true,icon:'glacier',title:'瓦納卡 ➔ 冰河鎮',drive:'4hr',lv:1,lvText:'普通（平緩健行）',stay:'冰河鎮（Franz Josef）',kitchen:'共用',items:[
+    {t:'drive',title:'6 號公路到 Haast',chips:['Lake Wanaka Lookout','Fantail Falls','Thunder Creek Falls']},
+    {t:'hike',title:'Blue Pools Track',dur:'1hr',must:true},
+    {t:'drive',title:'6 號公路到冰河鎮',chips:['Ship Creek','Knights Point Lookout']},
+    {t:'hike',title:'Monro Beach Walk',dur:'1.5hr'}]},
+  {date:'2/4',wd:'四',star:true,icon:'glacier',title:'冰河鎮 ➔ 霍基蒂卡',drive:'2hr',lv:1,lvText:'普通（平緩健行）',stay:'霍基蒂卡',kitchen:'私人',items:[
+    {t:'hike',title:'Lake Matheson',dur:'1.5hr',must:true,img:'Lake Matheson With A View Of Mt Cook New Zealand (150681179).jpeg'},
+    {t:'spot',title:'Fox Glacier Lookout'},
+    {t:'drive',title:'6 號公路至 Hokitika'},
+    {t:'stop',title:'沿途短休息',chips:['Lake Mapourika Recreational Area','Lake Ianthe Wharf','Ross']},
+    {t:'hike',title:'Hokitika Gorge',dur:'1hr',must:true,img:'TWC Hokitika Gorge • Stewart Nimmo • MRD 1.jpg'},
+    {t:'shop',title:'Woolworths Hokitika',p:'買齊 D12 亞瑟通道的晚餐、早餐與行動糧，亞瑟通道村物價高、選擇少。'}]},
+  {date:'2/5',wd:'五',star:true,icon:'mount',title:'霍基蒂卡 ➔ 亞瑟通道',drive:'1.5hr',lv:2,lvText:'中強度（平緩健行、簡單爬升）',stay:'亞瑟通道村／城堡山周邊',kitchen:'共用',items:[
+    {t:'hike',title:'Tunnel Terrace Walk',dur:'1hr'},
+    {t:'drive',title:'73 號公路至 Arthur\'s Pass Village',chips:['Kumara','Otira','Otira Viaduct Lookout']},
+    {t:'hike',title:'Otira Valley Track 或 Bealey Valley Track',dur:'1–1.5hr'},
+    {t:'hike',title:'Devil\'s Punchbowl',dur:'1hr',must:true,img:'Devil\'s Punchbowl Waterfall, Arthur\'s Pass.jpg'}]},
+  {date:'2/6',wd:'六',icon:'mount',title:'亞瑟通道 ➔ 基督城',drive:'2hr',lv:1,lvText:'普通（散步）',stay:'基督城',kitchen:null,items:[
+    {t:'hike',title:'Castle Hill',dur:'2hr',must:true,img:'Castle Hill rock formations.jpg'},
+    {t:'hike',title:'Cave Stream Loop Track'},
+    {t:'drive',title:'73 號公路至 Christchurch',chips:['Lake Grasmere','Lake Pearson','Pippa\'s Lookout','Porters Pass viewpoint']},
+    {t:'shop',title:'伴手禮大採買・PAK\'nSAVE／Woolworths',chips:['Whittaker\'s 巧克力','Manuka 蜂蜜／蜂王乳','紅白酒','堅果']}]},
+  {date:'2/7',wd:'日',icon:'plane',title:'基督城 ➔ 返家',drive:null,lv:0,stay:'返家',kitchen:null,items:[
+    {t:'note',title:'修整行李'},
+    {t:'drive',title:'還車'},
+    {t:'spot',title:'搭機返家 ✈️'}]}
+];
+
+/* ── 日期切換 ── */
+const daysEl = document.getElementById('days');
+const headEl = document.getElementById('day-head');
+const metaEl = document.getElementById('day-meta');
+const tlEl = document.getElementById('timeline');
+days.forEach((d,i)=>{
+  const b = document.createElement('button');
+  b.setAttribute('role','tab');
+  b.innerHTML = `<small>D${i+1}${d.star?'＊':''}</small><b>${d.date}</b><small>（${d.wd}）</small>`;
+  b.onclick = ()=>show(i,true);
+  daysEl.appendChild(b);
+});
+function show(i, animate){
+  [...daysEl.children].forEach((b,j)=>b.setAttribute('aria-selected', j===i));
+  daysEl.children[i].scrollIntoView({block:'nearest',inline:'center',behavior:(animate && !reduce.matches)?'smooth':'auto'});
+  const d = days[i];
+  headEl.innerHTML = `${icon[d.icon]}<div><p class="muted">Day ${i+1}・${d.date}（${d.wd}）</p><h3>${d.title}</h3></div>`;
+  const lv = LV[d.lv];
+  metaEl.innerHTML = [
+    d.drive?`<span class="tag t-drive">🚗 車程 ${d.drive}</span>`:'',
+    `<span class="tag ${lv[0]}">💪 ${d.lvText||lv[1]}</span>`,
+    `<span class="tag">🛏 ${d.stay}</span>`,
+    d.kitchen?`<span class="tag">🍳 ${d.kitchen}</span>`:''
+  ].join('');
+  tlEl.innerHTML = d.items.map(it=>{
+    const tg = TAG[it.t];
+    return `<li style="--c:${tg[2]}"><div class="card">
+      <span class="tag ${tg[0]}">${tg[1]}${it.dur?` ${it.dur}`:''}</span>
+      <h4>${it.title}${it.must?'<span class="must">必去</span>':''}</h4>
+      ${it.p?`<p>${it.p}</p>`:''}
+      ${it.chips?`<div class="chips">${it.chips.map(c=>`<span>${c}</span>`).join('')}</div>`:''}
+      ${it.img?`<figure class="photo"><img src="${PH(it.img)}" alt="${it.cap||it.title}" loading="lazy" onerror="this.closest('figure').remove()"><figcaption>${it.cap?it.cap+'・':''}照片：<a href="${PG(it.img)}" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure>`:''}
+      ${it.links?`<div class="links">${it.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('')}</div>`:''}
+    </div></li>`;
+  }).join('');
+  if (animate && !reduce.matches){
+    [tlEl, headEl].forEach(el=>{ el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); });
+  }
+}
+// 旅行期間自動顯示紐西蘭當地的當天
+(function(){
+  let idx = -1;
+  try{
+    const parts = new Intl.DateTimeFormat('en-US',{timeZone:'Pacific/Auckland',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date());
+    const g = t => parts.find(p=>p.type===t).value;
+    if (g('year')==='2027') idx = days.findIndex(d=>d.date===`${g('month')}/${g('day')}`);
+  }catch(e){}
+  show(idx>=0?idx:0,false);
+})();
+
+/* ── 首頁照片牆 ── */
+const galEl = document.getElementById('gallery');
+days.forEach((d,i)=>d.items.forEach(it=>{
+  if(!it.img) return;
+  const b = document.createElement('button');
+  b.innerHTML = `<img src="${PH(it.img)}" alt="${it.title}" loading="lazy" onerror="this.parentNode.remove()"><span>${it.title}</span><small>D${i+1}・${d.date}</small>`;
+  b.onclick = ()=>{ show(i,true); document.getElementById('plan').scrollIntoView({behavior:reduce.matches?'auto':'smooth'}); };
+  galEl.appendChild(b);
+}));
+
+/* ── 採買 ── */
+const stages = [
+  {name:'第一階段',route:'基督城 ➔ 庫克山 ➔ 皇后鎮',rows:[
+    ['D1','基督城','PAK\'nSAVE','全程最大採買：乾糧、保冷劑、防蚊液、水、基礎食材'],
+    ['D2','蒂卡波湖途中','Woolworths','Fairlie／Geraldine 順路補新鮮水果與水'],
+    ['D3','庫克山','無超市','靠 D1–D2 存糧撐過今晚和明天行動糧']]},
+  {name:'第二階段',route:'皇后鎮 ➔ 蒂阿瑙 ➔ 米爾福德',rows:[
+    ['D4','皇后鎮','PAK\'nSAVE Frankton','中途大補給：生鮮肉品、蔬菜、換冰、啤酒'],
+    ['D5','皇后鎮市區','FreshChoice','徒步補給：熟食、宵夜、零食'],
+    ['D6','蒂阿瑙','FreshChoice','峽灣救援點：買齊 D7 健行午餐與行動糧']]},
+  {name:'第三階段',route:'瓦納卡 ➔ 西海岸冰河鎮',rows:[
+    ['D8','瓦納卡','Woolworths／FreshChoice','買齊帶往冰河鎮（D10）的晚餐與早餐'],
+    ['D9','瓦納卡','鎮上超市','爬完 Roys Peak 買烤雞補熱量']]},
+  {name:'第四階段',route:'西海岸 ➔ 亞瑟通道 ➔ 基督城',rows:[
+    ['D11','霍基蒂卡','Woolworths Hokitika','買齊亞瑟通道（D12）的晚餐與行動糧'],
+    ['D13','基督城','PAK\'nSAVE／Woolworths','伴手禮大採買：巧克力、蜂蜜、紅白酒']]}
+];
+document.getElementById('shop-list').innerHTML = stages.map(s=>`
+  <div class="card stage"><h3><i>${s.name}</i>${s.route}</h3>
+  ${s.rows.map(r=>`<div class="shop-row"><div class="d">${r[0]}</div><div><b>${r[1]}・${r[2]}</b><p>${r[3]}</p></div></div>`).join('')}
+  </div>`).join('');
+
+/* ── 待辦清單 ── */
+const groups = [
+  {name:'入境文件', items:['申請 NZeTA（官方 App）','抵達前 24 小時內填 NZTD','不確定的物品一律勾 Yes']},
+  {name:'自駕文件', items:['駕照 × 2','國際駕照 × 2','信用卡實體卡（立ㄉ）']},
+  {name:'檢疫準備', items:['刷乾淨所有鞋底','清潔登山杖、帳篷釘、三腳架','戶外鞋放行李箱最上方','準備英文食品清單','確認沒帶禁止攜帶的食物']},
+  {name:'預訂與其他', items:['填寫班機資訊','訂米爾福德遊船','註冊 EveryDay Rewards 會員卡','準備保冷袋']}
+];
+const KEY = 'nz-2027-todo';
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){}
+const listsEl = document.getElementById('lists');
+groups.forEach((g,gi)=>{
+  const wrap = document.createElement('div');
+  wrap.className = 'list-group';
+  wrap.innerHTML = `<h3>${g.name}<span data-g="${gi}"></span></h3><div class="checks">${
+    g.items.map((it,ii)=>{
+      const id=`c${gi}-${ii}`;
+      return `<div class="check"><input type="checkbox" id="${id}" ${saved[id]?'checked':''}><label for="${id}">${it}</label></div>`;
+    }).join('')}</div>`;
+  listsEl.appendChild(wrap);
+});
+function update(){
+  const all = listsEl.querySelectorAll('input');
+  const done = [...all].filter(x=>x.checked).length;
+  document.getElementById('bar').style.width = (done/all.length*100)+'%';
+  groups.forEach((g,gi)=>{
+    const n = listsEl.querySelectorAll(`input[id^="c${gi}-"]:checked`).length;
+    listsEl.querySelector(`[data-g="${gi}"]`).textContent = `${n} / ${g.items.length}`;
+  });
+}
+listsEl.addEventListener('change', e=>{
+  saved[e.target.id] = e.target.checked;
+  try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(err){}
+  update();
+});
+update();
+
+/* ── 住宿 ── */
+const bk = (slug,ci,co)=>`https://www.booking.com/hotel/nz/${slug}.zh-tw.html?checkin=${ci}&checkout=${co}&group_adults=2&no_rooms=1&group_children=0`;
+const stays = [
+  {dates:'1/25',n:1,place:'基督城',name:'基督城住宿',room:'豪華特大雙人床房',url:bk('golden','2027-01-25','2027-01-26')},
+  {dates:'1/26',n:1,place:'蒂卡波湖',name:'YHA Lake Tekapo',room:'特大雙人床房・私人衛浴',url:bk('yha-lake-tekapo-lake-tekapo','2027-01-26','2027-01-27')},
+  {dates:'1/27',n:1,place:'庫克山村',name:'YHA Mount Cook',room:'雙床房・共用衛浴',url:bk('yha-mount-cook','2027-01-27','2027-01-28')},
+  {dates:'1/28–29',n:2,place:'皇后鎮',name:'Matakauri Inn',room:'湖景雙床房',url:bk('matakauri-inn','2027-01-28','2027-01-30')},
+  {dates:'1/30–31',n:2,place:'蒂阿瑙',name:'Te Anau Kiwi Park & Motels',room:'加大雙人床單房公寓',url:bk('te-anau-kiwi-park-amp-motels','2027-01-30','2027-02-01')},
+  {dates:'2/1–2',n:2,place:'瓦納卡',name:'Kowhai Studio',room:'花園景觀單房公寓',url:bk('kowhai-studio-private-in-central-wanaka','2027-02-01','2027-02-03')},
+  {dates:'2/3',n:1,place:'冰河鎮',name:'Franz Josef TOP 10 Holiday Park',room:'特大號床間・私人浴室',url:bk('franz-josef-top-10-holiday-park','2027-02-03','2027-02-04')},
+  {dates:'2/4',n:1,place:'霍基蒂卡',name:'Jade Court Motor Lodge',room:'單房公寓・附 SPA 浴缸',url:bk('jade-court-motor-lodge','2027-02-04','2027-02-05')},
+  {dates:'2/5',n:1,place:'亞瑟通道',name:'Arthur\'s Pass Ecolodge',room:'經濟雙人房',url:bk('arthur-39-s-pass-ecolodge','2027-02-05','2027-02-06')},
+  {dates:'2/6',n:1,place:'基督城',name:'基督城住宿',room:'豪華特大雙人床房',url:bk('golden','2027-02-06','2027-02-07')}
+];
+const colors = ['var(--mizu)','var(--green)','var(--yellow)','var(--coral)'];
+document.getElementById('stay-list').innerHTML = stays.map((s,i)=>`
+  <li class="card stay-item">
+    <div class="nights" style="background:${colors[i%4]}"><b>${s.dates}</b><small>${s.n} 晚</small></div>
+    <div><p class="muted">${s.place}</p><h3>${s.name}</h3><p>${s.room}</p>
+    <a class="btn" href="${s.url}" target="_blank" rel="noopener">Booking 訂房頁 ↗</a></div>
+  </li>`).join('');
+</script>
+</body>
+</html>
