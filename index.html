@@ -425,72 +425,72 @@ const PH = f => `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURI
 const PG = f => `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f.replace(/ /g,'_'))}`;
 const days = [
   {date:'1/25',wd:'一',icon:'city',title:'基督城：取車、採買、修整',drive:null,lv:0,stay:'基督城',kitchen:null,items:[
-    {t:'spot',title:'取車'},
+    {t:'spot',title:'取車',img:'Avon River, Christchurch, New Zealand 01.jpg',cap:'基督城 Avon River'},
     {t:'shop',title:'全程最大採買・PAK\'nSAVE',must:true,p:'Riccarton 或 Moorhouse 門市，取車後直接前往。把未來 3–4 天的基底乾糧一次買齊。',
      chips:['保冷劑／冰塊','夾鏈袋','垃圾袋','面紙／濕紙巾','防蚊／防黑蠅噴霧（DEET）','吐司','雞蛋','果醬／花生醬','Muesli Bars','堅果','大瓶礦泉水','牛奶','優格','起司片','培根','香腸／雞胸肉']},
     {t:'note',title:'早點休息，修整時差'}]},
   {date:'1/26',wd:'二',icon:'lake',title:'基督城 ➔ 蒂卡波湖',drive:'3.5hr',lv:1,stay:'蒂卡波湖',kitchen:'共用',items:[
     {t:'drive',title:'77 號、72 號公路，或 1 號公路'},
     {t:'shop',title:'途中補給・Woolworths',p:'經 Fairlie 或 Geraldine 時，補充新鮮水果（蘋果、香蕉，方便健行帶）。'},
-    {t:'spot',title:'Mount John 咖啡廳',must:true},
+    {t:'spot',title:'Mount John 咖啡廳',must:true,img:'Mount John University Observatory.Lake Tekapo.NZ (11881764616).jpg'},
     {t:'spot',title:'好牧羊人教堂・湖畔',must:true,img:'Church of the Good Shepherd, Lake Tekapo, New Zealand 01.jpg'}]},
   {date:'1/27',wd:'三',icon:'mount',title:'蒂卡波湖 ➔ 普卡基湖 ➔ 庫克山',drive:'1.5hr',lv:1,lvText:'普通（平緩健行）',stay:'庫克山村',kitchen:'共用',items:[
     {t:'drive',title:'8 號、80 號公路'},
-    {t:'stop',title:'沿途短休息',chips:['Lake Pukaki Viewpoint','Peter\'s Lookout']},
+    {t:'stop',title:'沿途短休息',chips:['Lake Pukaki Viewpoint','Peter\'s Lookout'],img:'Lake Pukaki and Mt Cook. NZ (49779072228).jpg',cap:'Lake Pukaki 與庫克山'},
     {t:'spot',title:'Mt Cook Alpine Salmon Shop'},
     {t:'hike',title:'Hooker Valley Track',dur:'3hr',must:true,img:'Hooker Valley Track, Mount Cook, New Zealand.jpg'},
-    {t:'hike',title:'Tasman Lake Track',dur:'1.5hr'},
+    {t:'hike',title:'Tasman Lake Track',dur:'1.5hr',img:'Tour boat among the icebergs on Tasman Lake.jpg',cap:'Tasman Lake 的冰山'},
     {t:'note',title:'庫克山村沒有超市',p:'只有飯店餐廳。今晚晚餐和明天 Sealy Tarns 的行動糧，全靠 D1–D2 的存糧。'}]},
   {date:'1/28',wd:'四',icon:'mount',title:'庫克山 ➔ 克羅姆威爾 ➔ 皇后鎮',drive:'3.5hr',lv:3,stay:'皇后鎮',kitchen:'微波爐、熱水壺',items:[
     {t:'hike',title:'Sealy Tarns Track',dur:'4hr',must:true,img:'Sealy Tarns, Aoraki - Mount Cook National Park, New Zealand 15.jpg'},
     {t:'drive',title:'8 號公路'},
-    {t:'stop',title:'沿途短休息',chips:['Lindis Pass Viewpoint','Roaring Meg Lookout']},
-    {t:'spot',title:'Cromwell 散步',chips:['Cromwell Heritage Precinct','The Junction Lookout','Bannockburn Sluicings Historic Reserve']},
+    {t:'stop',title:'沿途短休息',chips:['Lindis Pass Viewpoint','Roaring Meg Lookout'],img:'Hills in Lindis Pass, New Zealand.jpg',cap:'Lindis Pass'},
+    {t:'spot',title:'Cromwell 散步',chips:['Cromwell Heritage Precinct','The Junction Lookout','Bannockburn Sluicings Historic Reserve'],img:'Old Cromwell Town, Central Otago.jpg',cap:'Cromwell 老街區'},
     {t:'shop',title:'中途大補給・PAK\'nSAVE Frankton',p:'在進入皇后鎮市區前的 Frankton 購物區。供 D4–D5 皇后鎮與 D6 蒂阿瑙烹飪。',
      chips:['冰塊／冰寶換冰','牛排','羊排','鮭魚','蔬菜','洋芋片','氣泡水','啤酒／葡萄酒','果汁']}]},
   {date:'1/29',wd:'五',icon:'hill',title:'皇后鎮',drive:null,lv:1,lvText:'普通（簡單爬升、散步）',stay:'皇后鎮',kitchen:'微波爐、熱水壺',items:[
     {t:'hike',title:'Queenstown Hill Walkway',dur:'2hr',img:'Queenstown Hill.jpg'},
     {t:'hike',title:'Moke Lake',dur:'2.5hr',must:true},
-    {t:'spot',title:'Glenorchy（漂亮小鎮）'},
+    {t:'spot',title:'Glenorchy（漂亮小鎮）',img:'Glenorchy wharf and red shed at Lake Wakatipu.jpg',cap:'Glenorchy 碼頭紅屋'},
     {t:'shop',title:'FreshChoice Queenstown',p:'市中心 Shotover St，徒步可到。現烤熟食、三明治、牛奶、宵夜。'}]},
   {date:'1/30',wd:'六',icon:'hill',title:'皇后鎮 ➔ 蒂阿瑙',drive:'2.5hr',lv:1,lvText:'普通（散步）',stay:'蒂阿瑙',kitchen:'共用',items:[
-    {t:'spot',title:'皇后鎮市區散步 或 Lake Alta'},
+    {t:'spot',title:'皇后鎮市區散步 或 Lake Alta',img:'Lake Wakatipu by Queenstown.jpg',cap:'皇后鎮與 Lake Wakatipu'},
     {t:'drive',title:'6 號、94 號公路'},
-    {t:'stop',title:'沿途短休息',chips:['Devil\'s Staircase Lookout Point','Kingston','Mossburn','Wilderness Scientific Reserve']},
+    {t:'stop',title:'沿途短休息',chips:['Devil\'s Staircase Lookout Point','Kingston','Mossburn','Wilderness Scientific Reserve'],img:'Lake Wakatipu (6706360591).jpg',cap:'往 Kingston 途中的 Lake Wakatipu'},
     {t:'shop',title:'峽灣前補給・FreshChoice Te Anau',must:true,p:'進米爾福德峽灣前最後一家大型超市。',
      chips:['D7 午餐：三明治／壽司／派','熟食肉捲','蘋果／香蕉','巧克力','堅果','電解質發泡錠','D7 晚餐肉品與蔬菜']}]},
   {date:'1/31',wd:'日',icon:'fjord',title:'蒂阿瑙 ➔ 米爾福德峽灣 ➔ 蒂阿瑙',drive:'4hr',lv:3,stay:'蒂阿瑙',kitchen:'共用',items:[
     {t:'drive',title:'94 號公路去程'},
-    {t:'stop',title:'沿途短休息',chips:['Eglinton Valley']},
+    {t:'stop',title:'沿途短休息',chips:['Eglinton Valley'],img:'Eglinton Valley NZ 01.jpg',cap:'Eglinton Valley'},
     {t:'boat',title:'Milford Sound 遊船（待訂）',must:true,links:cruises,img:'Milford Sound (New Zealand).JPG'},
     {t:'hike',title:'Lake Marian Track',dur:'3.5hr',must:true,img:'Marian Creek in Fiordland National Park 02.jpg',cap:'步道起點的 Marian Creek'},
-    {t:'stop',title:'回程順遊',chips:['Falls Creek Falls','Lake Gunn North Viewpoint','Mirror Lakes']}]},
+    {t:'stop',title:'回程順遊',chips:['Falls Creek Falls','Lake Gunn North Viewpoint','Mirror Lakes'],img:'00 1360 New Zealand - Mirror Lakes.jpg',cap:'Mirror Lakes'}]},
   {date:'2/1',wd:'一',icon:'hill',title:'蒂阿瑙 ➔ 箭鎮 ➔ 瓦納卡',drive:'3hr',lv:1,lvText:'普通（散步）',stay:'瓦納卡',kitchen:'共用',items:[
     {t:'drive',title:'94 號、6 號公路至 Arrowtown',chips:['Kingston','Mossburn']},
-    {t:'spot',title:'Arrowtown',chips:['Historic Arrowtown Chinese Settlement','Lakes District Museum & Gallery','Buckingham Street']},
-    {t:'drive',title:'Crown Range Rd 至 Wanaka',chips:['Crown Range Summit','Cardrona Lookout','Cardrona Hotel']},
+    {t:'spot',title:'Arrowtown',chips:['Historic Arrowtown Chinese Settlement','Lakes District Museum & Gallery','Buckingham Street'],img:'Arrowtown Chinese Settlement.jpg',cap:'Arrowtown 華人聚落'},
+    {t:'drive',title:'Crown Range Rd 至 Wanaka',chips:['Crown Range Summit','Cardrona Lookout','Cardrona Hotel'],img:'Cardrona Hotel, New Zealand, 2012.jpg',cap:'Cardrona Hotel'},
     {t:'shop',title:'冰河鎮前大補給・Woolworths／FreshChoice Wanaka',must:true,p:'Fox Glacier 和 Franz Josef 只有很貴的 Four Square，D10 晚餐與早餐要在這裡買齊，用保冷袋帶過去。',
      chips:['牛排／雞腿','雞蛋','吐司','牛奶','蔬菜']}]},
   {date:'2/2',wd:'二',icon:'mount',title:'瓦納卡',drive:null,lv:3,stay:'瓦納卡',kitchen:'共用',items:[
     {t:'hike',title:'Roys Peak Track 或 Isthmus Peak',dur:'6hr',must:true,img:'Roys Peak.jpg',cap:'Roys Peak'},
-    {t:'spot',title:'Wanaka 市區、湖畔散步'},
+    {t:'spot',title:'Wanaka 市區、湖畔散步',img:'Wanaka tree.jpg',cap:'湖畔的 That Wanaka Tree'},
     {t:'shop',title:'爬完補充熱量',p:'鎮上超市買現烤烤雞或熟食，快速補充蛋白質。'}]},
   {date:'2/3',wd:'三',star:true,icon:'glacier',title:'瓦納卡 ➔ 冰河鎮',drive:'4hr',lv:1,lvText:'普通（平緩健行）',stay:'冰河鎮（Franz Josef）',kitchen:'共用',items:[
-    {t:'drive',title:'6 號公路到 Haast',chips:['Lake Wanaka Lookout','Fantail Falls','Thunder Creek Falls']},
-    {t:'hike',title:'Blue Pools Track',dur:'1hr',must:true},
-    {t:'drive',title:'6 號公路到冰河鎮',chips:['Ship Creek','Knights Point Lookout']},
-    {t:'hike',title:'Monro Beach Walk',dur:'1.5hr'}]},
+    {t:'drive',title:'6 號公路到 Haast',chips:['Lake Wanaka Lookout','Fantail Falls','Thunder Creek Falls'],img:'Thunder Creek Falls.jpg',cap:'Thunder Creek Falls'},
+    {t:'hike',title:'Blue Pools Track',dur:'1hr',must:true,img:'Makarora River, Otago, New Zealand.jpg',cap:'Blue Pools 所在的 Makarora 河谷'},
+    {t:'drive',title:'6 號公路到冰河鎮',chips:['Ship Creek','Knights Point Lookout'],img:'Knight\'s Point, West Coast.jpg',cap:'Knights Point'},
+    {t:'hike',title:'Monro Beach Walk',dur:'1.5hr',img:'Fiordland Crested Penguin.jpg',cap:'Monro Beach 有機會遇到的峽灣企鵝'}]},
   {date:'2/4',wd:'四',star:true,icon:'glacier',title:'冰河鎮 ➔ 霍基蒂卡',drive:'2hr',lv:1,lvText:'普通（平緩健行）',stay:'霍基蒂卡',kitchen:'私人',items:[
     {t:'hike',title:'Lake Matheson',dur:'1.5hr',must:true,img:'Lake Matheson With A View Of Mt Cook New Zealand (150681179).jpeg'},
     {t:'spot',title:'Fox Glacier Lookout'},
     {t:'drive',title:'6 號公路至 Hokitika'},
-    {t:'stop',title:'沿途短休息',chips:['Lake Mapourika Recreational Area','Lake Ianthe Wharf','Ross']},
+    {t:'stop',title:'沿途短休息',chips:['Lake Mapourika Recreational Area','Lake Ianthe Wharf','Ross'],img:'Lake mapourika NZ.jpeg',cap:'Lake Mapourika'},
     {t:'hike',title:'Hokitika Gorge',dur:'1hr',must:true,img:'TWC Hokitika Gorge • Stewart Nimmo • MRD 1.jpg'},
     {t:'shop',title:'Woolworths Hokitika',p:'買齊 D12 亞瑟通道的晚餐、早餐與行動糧，亞瑟通道村物價高、選擇少。'}]},
   {date:'2/5',wd:'五',star:true,icon:'mount',title:'霍基蒂卡 ➔ 亞瑟通道',drive:'1.5hr',lv:2,lvText:'中強度（平緩健行、簡單爬升）',stay:'亞瑟通道村／城堡山周邊',kitchen:'共用',items:[
     {t:'hike',title:'Tunnel Terrace Walk',dur:'1hr'},
-    {t:'drive',title:'73 號公路至 Arthur\'s Pass Village',chips:['Kumara','Otira','Otira Viaduct Lookout']},
-    {t:'hike',title:'Otira Valley Track 或 Bealey Valley Track',dur:'1–1.5hr'},
+    {t:'drive',title:'73 號公路至 Arthur\'s Pass Village',chips:['Kumara','Otira','Otira Viaduct Lookout'],img:'Otira Viaduct, Devil’s staircase.jpg',cap:'Otira Viaduct'},
+    {t:'hike',title:'Otira Valley Track 或 Bealey Valley Track',dur:'1–1.5hr',img:'Otira Valley Track, Arthur\'s Pass National Park, New Zealand 06.jpg',cap:'Otira Valley Track'},
     {t:'hike',title:'Devil\'s Punchbowl',dur:'1hr',must:true,img:'Devil\'s Punchbowl Waterfall, Arthur\'s Pass.jpg'}]},
   {date:'2/6',wd:'六',icon:'mount',title:'亞瑟通道 ➔ 基督城',drive:'2hr',lv:1,lvText:'普通（散步）',stay:'基督城',kitchen:null,items:[
     {t:'hike',title:'Castle Hill',dur:'2hr',must:true,img:'Castle Hill rock formations.jpg'},
@@ -558,7 +558,7 @@ const galEl = document.getElementById('gallery');
 days.forEach((d,i)=>d.items.forEach(it=>{
   if(!it.img) return;
   const b = document.createElement('button');
-  b.innerHTML = `<img src="${PH(it.img)}" alt="${it.title}" loading="lazy" onerror="this.parentNode.remove()"><span>${it.title}</span><small>D${i+1}・${d.date}</small>`;
+  b.innerHTML = `<img src="${PH(it.img)}" alt="${it.cap||it.title}" loading="lazy" onerror="this.parentNode.remove()"><span>${it.cap||it.title}</span><small>D${i+1}・${d.date}</small>`;
   b.onclick = ()=>{ show(i,true); document.getElementById('plan').scrollIntoView({behavior:reduce.matches?'auto':'smooth'}); };
   galEl.appendChild(b);
 }));
